@@ -25,4 +25,37 @@
  * @param {number} y
  * @return {number}
  */
-var hammingDistance = function (x, y) {};
+var hammingDistance = function (x, y) {
+	let xBinRaw = x.toString(2);
+	let yBinRaw = y.toString(2);
+
+	function makeEqualLength(x, y) {
+		const xLen = x.length;
+		const yLen = y.length;
+		if (xLen > yLen) {
+			let newY = y;
+			for (let i = 0; i < xLen - yLen; i++) {
+				newY = parseInt("0" + y.toString(), 2);
+			}
+			return [x, newY];
+		} else {
+			let newX = x;
+			for (let i = 0; i < yLen - xLen; i++) {
+				newX = parseInt("0" + x.toString(), 2);
+			}
+			return [newX, y];
+		}
+    }
+    
+    let xBin;
+    let yBin;
+    if (xBinRaw.length !== yBinRaw.length) {
+        [xBin, yBin] = makeEqualLength(xBinRaw, yBinRaw);
+    } else {
+        xBin = xBinRaw;
+        yBin = yBinRaw;
+    }
+};
+
+console.log(hammingDistance(1, 3));
+console.log(hammingDistance(4, 3));
