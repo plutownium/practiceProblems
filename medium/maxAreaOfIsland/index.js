@@ -3,23 +3,26 @@
  * @return {number}
  */
 var maxAreaOfIsland = function (grid) {
+  const gridLengthY = grid.length;
+  const gridLengthX = grid[0].length;
   let alreadyBeenTo = [];
-  function detectAdjacents(x, y, islandPieces, placesWeveBeenTo, reportedSize) {
+  function detectAdjacents(x, y, islandPieces, placesWeveBeenTo, currentSize) {
     if (placesWeveBeenTo.includes(JSON.stringify([x, y]))) {
       throw "you are trying to run a func on an input it was designed to avoid";
     }
     // 2,2 => 1,2| 3,2| 2,1| 2,3
     placesWeveBeenTo.push(JSON.stringify([x, y]));
     // collect all adjacents, re-run it, discarding prev hits.
-    let left = x - 1;
-    let right = x + 1;
-    let up = y - 1;
-    let down = y + 1;
+    let left = x - 1 >= 0 ? x - 1 : null;
+    let right = x + 1 < gridLengthX ? x + 1 : null;
+    let up = y - 1 >= 0 ? y - 1 : null;
+    let down = y + 1 < gridLengthY ? y + 1 : null;
 
     // let continueCondition = false; // false if no new hits are detected
-    let reportedSize = reportedSize;
+    let reportedSize = currentSize;
 
     if (
+      left !== null &&
       grid[y][left] === 1 &&
       !placesWeveBeenTo.includes(JSON.stringify([left, y]))
     ) {
@@ -34,6 +37,7 @@ var maxAreaOfIsland = function (grid) {
       );
     }
     if (
+      right !== null &&
       grid[y][right] === 1 &&
       !placesWeveBeenTo.includes(JSON.stringify([right, y]))
     ) {
@@ -48,6 +52,7 @@ var maxAreaOfIsland = function (grid) {
       );
     }
     if (
+      up !== null &&
       grid[up][x] === 1 &&
       !placesWeveBeenTo.includes(JSON.stringify([x, up]))
     ) {
@@ -62,6 +67,7 @@ var maxAreaOfIsland = function (grid) {
       );
     }
     if (
+      down !== null &&
       grid[down][x] === 1 &&
       !placesWeveBeenTo.includes(JSON.stringify([x, down]))
     ) {
@@ -88,11 +94,13 @@ var maxAreaOfIsland = function (grid) {
       let islandPieces = [];
       if (grid[y][x] === 1) {
         // follow to conclusion while removing searchedIndexes from pool
-        islands.push(detectAdjacents(x, y, islandPieces, alreadyBeenTo, 0));
+        islands.push(detectAdjacents(x, y, islandPieces, alreadyBeenTo, 1));
       }
     }
   }
-  return islands.sort((a, b) => a.length - b.length).pop();
+  const sorted = islands.sort((a, b) => a - b);
+  console.log(sorted);
+  return sorted.pop();
 };
 
 // oof
