@@ -99,7 +99,9 @@ var maxAreaOfIsland = function (grid) {
     }
   }
   const sorted = islands.sort((a, b) => a - b);
-  console.log(sorted);
+  if (sorted[0] === 0) {
+    return 0;
+  }
   return sorted.pop();
 };
 
