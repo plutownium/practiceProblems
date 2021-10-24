@@ -99,11 +99,14 @@ var maxAreaOfIsland = function (grid) {
     }
   }
   const sorted = islands.sort((a, b) => a - b);
-  if (sorted[0] === 0) {
+  if (sorted.length === 0) {
     return 0;
   }
   return sorted.pop();
 };
+
+// Runtime: 631 ms, faster than 5.05% of JavaScript online submissions for Max Area of Island.
+// LMAOOOOOOOO I knew it would be slow
 
 // oof
 // ex1:
