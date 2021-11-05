@@ -33,20 +33,29 @@ function returnString(maxLength): string {
     return returnVal;
 }
 
-// function getFunctionBack(picker: number): function {
-//     if (picker === 1) {
-//         return () => {
-//             console.log("dirt")
-//         }
-//     } else if (picker ===2) {
-//         return () => {
-//             console.log("grass");
-//         }
-//     } else if (picker===3) {
-//         return () => {
-//             console.log("air")
-//         }
-//     } else {
-//         throw "oops";
-//     }
-// }
+function filterSelection(selection: string[], nameTarget: string, tagTarget?: string) {
+    let passableNames = [];
+    if (tagTarget !== undefined) {
+        // is either target present in selection? if so, filter em out
+        for (let i = 0; i < selection.length; i++) {
+            let select: string = selection[i]
+            if (select.includes(tagTarget), select.includes(nameTarget)) {
+                passableNames.push(select);
+            }
+        }
+    } else {
+        // remove ony by nameTarget
+        for (let i = 0; i < selection.length; i++) {
+            let select: string = selection[i]
+            if (typeof select === "string") {
+                console.log(select, 51)
+                if (select.includes(nameTarget)) {
+                    passableNames.push(selection[i]);
+                }
+            }
+            
+        }
+    }   
+    console.log(passableNames);
+    return passableNames;
+}
