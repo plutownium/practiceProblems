@@ -9,19 +9,19 @@ var maxArea = function (height) {
   let fourth = [0, 0];
 
   for (let i = 0; i < height.length; i++) {
-    if (height[i] > tallest[1]) {
-      tallest = [i, height[i]];
-    } else if (height[i] > second[1]) {
+    if (height[i] >= tallest[1]) {
+      if (tallest[1] === height[i]) {
+        second = [i, height[i]];
+      } else {
+        tallest = [i, height[i]];
+      }
+    } else if (height[i] >= second[1]) {
       second = [i, height[i]];
-    } else if (height[i] > third[1]) {
+    } else if (height[i] >= third[1]) {
       third = [i, height[i]];
-    } else if (height[i] > fourth[1]) {
+    } else if (height[i] >= fourth[1]) {
       fourth = [i, height[i]];
     } else {
-      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:", [
-        i,
-        height[i],
-      ]);
     }
   }
 
@@ -38,11 +38,13 @@ var maxArea = function (height) {
   if (fourth[0] !== 0) {
     potentials.push(fourth);
   }
-  console.log("inputs potentials:", potentials, tallest, second, third, fourth);
+  console.log("PO TEN TIALS:", potentials);
   // calculate the volumes of every combo
   let highestVolume = 0;
-
-  if (potentials.length < 3) {
+  if (potentials.length == 1) {
+    return potentials[0][1];
+  }
+  if (potentials.length == 2) {
     // this block to capture edge cases
     let distance = 1;
     let highestWall = 0;
@@ -68,21 +70,21 @@ var maxArea = function (height) {
         const height =
           currentHeight > comparisonHeight ? comparisonHeight : currentHeight;
         const volume = distance * height;
-        console.log("000", volume, highestVolume);
+        // console.log("000", volume, highestVolume);
         if (volume > highestVolume) {
           highestVolume = volume;
-          console.log("a:", highestVolume);
+          // console.log("a:", highestVolume);
         }
       } else {
         const distance = comparisonIndex - currentIndexPosition;
         const height =
           currentHeight > comparisonHeight ? comparisonHeight : currentHeight;
         const volume = distance * height;
-        console.log("111", volume, highestVolume);
+        // console.log("111", volume, highestVolume);
         if (volume > highestVolume) {
-          console.log(comparisonIndex, currentIndexPosition, height, volume);
+          // console.log(comparisonIndex, currentIndexPosition, height, volume);
           highestVolume = volume;
-          console.log("b:", highestVolume);
+          // console.log("b:", highestVolume);
         }
       }
     }
@@ -98,14 +100,15 @@ var maxArea = function (height) {
 // Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
 
 const inputThree = [1, 8, 6, 2, 5, 4, 8, 3, 7];
-
+console.log(maxArea(inputThree)); // 49
 // console.log(
 //   "input:",
 //   inputThree,
 //   "returned:",
 //   maxArea(inputThree),
 //   "expected:",
-//   49
+//   49,
+//   "\n\n"
 // );
 
 // Example 3:
@@ -113,18 +116,28 @@ const inputThree = [1, 8, 6, 2, 5, 4, 8, 3, 7];
 // Input: height = [4,3,2,1,4]
 // Output: 16
 const inputTwo = [4, 3, 2, 1, 4];
+console.log(maxArea(inputTwo)); // 16
 // console.log(
 //   "input:",
 //   inputTwo,
 //   "returned:",
 //   maxArea(inputTwo),
 //   "expected:",
-//   16
+//   16,
+//   "\n\n"
 // );
 
 // Example 4:
 
 // Input: height = [1,2,1]
 // Output: 2
-const input3 = [1, 2, 1];
-console.log("input:", input3, "returned:", maxArea(input3), "expected:", 2);
+const input3 = [1, 1];
+// console.log(
+//   "input:",
+//   input3,
+//   "returned:",
+//   maxArea(input3),
+//   "expected:",
+//   1,
+//   "\n\n"
+// );
